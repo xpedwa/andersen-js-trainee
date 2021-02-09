@@ -1,0 +1,21 @@
+.SearchPanel{
+    text-align: center;
+    margin: 10px;
+}
+    .SearchPanel > * {
+        margin: 0 3px;
+    }
+
+    .SearchPanel > input {
+        padding: 6px;
+        width: 50%;
+    }
+
+    .SearchPanel > button {
+        padding: 6px;
+    }
+
+.SearchResult{
+    text-align: center;
+    margin: 10px;
+}
