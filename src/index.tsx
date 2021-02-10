@@ -1,16 +1,16 @@
-// eslint-disable-next-line no-use-before-define
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import './index.css';
-import App from './App';
+// import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Search from './Search/Search';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {/* <App /> */}
+    <Search />
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
