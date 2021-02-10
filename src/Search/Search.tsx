@@ -28,8 +28,6 @@ function Search() {
   }, [query, page]);
 
   function SearchInput() {
-
-
     return (
       <div className="SearchInput">
         <input value={query} onChange={newQuery} autoFocus placeholder="Search by GitHub repository" />
