@@ -28,7 +28,9 @@ function SearchResult(props : any) {
 
 function LoadMore(props : any) {
   return(
-    <input className="LoadMore" type="button" value="Load More" onClick={props.getMore} />
+    <div>
+      <input className="LoadMore" type="button" value="Load More" onClick={props.getMore} />
+    </div>
   )
 }
 
