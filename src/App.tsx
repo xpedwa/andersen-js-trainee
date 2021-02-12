@@ -1,46 +1,43 @@
 import React, { useEffect, useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-import ResultsPanel from './Components/SearchPanel';
-import { Header, Button, HotSearchInput } from './Components/defaultComponents';
+import Search from './Components/Search';
+import {Button, Header, Panel} from './Components/defaultComponents';
+import Favorites from './Components/Favorites';
+import View from './Components/View';
 
 function App() {
-  const [query, setQuery] = useState<string>('');
-  const [results, setResults] = useState<[]>([]);
-  const [page, setPage] = useState<number>(1);
-
-  const newQuery = (event : any) => {
-    setPage(1);
-    setQuery(event.target.value);
-  }
-
-  const getMore = () => {
-    setPage(page + 1)
-  }
-
-  const fetchToGitHub = (query : string, page : number) => {
-    query && query.length > 2 && fetch(`https://api.github.com/search/repositories?q=${query}&per_page=20&page=${page}`)
-    .then(response => response.json())
-    .then(obj => obj.items)
-    .then((res) => {
-      page > 1 
-        ? setResults((prevResults : any) => prevResults.concat(res)) 
-        : setResults(res)
-    })
-  }
-
-  useEffect(() => {
-    fetchToGitHub(query, page);
-  }, [query, page]);
-
   return (
-    <>
-      <Header>
-        <HotSearchInput onChange={newQuery} placeholder={"Search by GitHub repository"}/>
-      </Header>
+    <Router>
+      <Link to="/search">F</Link>
+      <Link to="/favorites">❤️</Link>
+        {/*
+          A <Switch> looks through all its children <Route>
+          elements and renders the first one whose path
+          matches the current URL. Use a <Switch> any time
+          you have multiple routes, but you want only one
+          of them to render at a time
+        */}
 
-      <ResultsPanel results={results}/>
-      <Button onClick={getMore} hidden={results.length === 0}>Load More</Button>
-    </>
+        <Switch>
+            <Route path="/search">
+              <Search />
+            </Route>
+
+            <Route path="/view">
+              <View />
+            </Route>
+
+            <Route path="/favorites">
+              <Favorites />
+            </Route>
+        </Switch>
+    </Router>
   );
 }
 
