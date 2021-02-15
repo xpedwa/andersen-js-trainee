@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
-import { Header, Button, HotSearchInput } from './defaultComponents';
-import { Panel, Card, Card__name, Avatar } from './defaultComponents';
+import { Button, HotSearchInput, Avatar, Panel } from './defaultComponents';
+import Card from './Card';
+import { Link } from "react-router-dom";
 
 function Search() {
   const [query, setQuery] = useState<string>('');
@@ -38,10 +38,11 @@ function Search() {
       <Panel>
         {
           props.results.map( (card : any) => 
-            <Card key={card.id} onClick={() => alert(card.url)}>
-              <Avatar src={card.owner.avatar_url} alt={card.name + "_logo"}/>
-              <Card__name>{card.name}</Card__name>
-            </Card>
+            <Link to={"/view"} key={card.id} >
+              <Card cardInfo={card} >
+                <Avatar src={card.owner.avatar_url} alt={card.name + "_logo"}/>
+              </Card>
+            </Link>
           )
         }
       </Panel>

@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-// import ResultsPanel from './SearchPanel';
-import { Header, Button } from './defaultComponents';
+import { Panel, Avatar } from './defaultComponents';
+import Card from './Card';
 
-function Favorites() {  
+function Favorites(props : any) {  
+  
   return (
-    <div>
-      <Button>Go Home</Button>
-    </div>
+    <Panel>
+      {
+        props.favorites.map( (card : any) => 
+          <Card cardInfo={card} key={card.id}>
+            <Avatar src={card.owner.avatar_url} alt={card.name + "_logo"}/>
+          </Card>
+        )
+      }
+    </Panel>
   );
 }
 

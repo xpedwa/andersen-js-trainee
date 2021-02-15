@@ -1,16 +1,5 @@
 import styled from 'styled-components';
 
-const Header = styled.div<any>`
-  position: fixed;
-  top: 0;
-  width: 100%;
-  margin: 0;
-  padding: 15px 0;
-
-  background: red;
-  text-align: center;
-`;
-
 const HotSearchInput = styled.input<any>`
   padding: 6px 20%;
 
@@ -28,8 +17,9 @@ const HotSearchInput = styled.input<any>`
 `;
 
 const Button = styled.button<any>`
-  padding: 6px 20%;
-  margin-bottom: 20px;
+  padding: 6px 20px;
+  margin: 6px;
+  // margin-bottom: 20px;
 
   background: white;
   border: none;
@@ -45,6 +35,10 @@ const Button = styled.button<any>`
   }
 `;
 
+const Avatar = styled.img`
+  width: 100px;
+  height: 100px;
+`;
 
 const Panel = styled.div`
   display: grid;
@@ -71,28 +65,5 @@ const Panel = styled.div`
   }
 `;
 
-const Card = styled.div`
-  padding: 10px;
-  
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0px 0px 2px 1px #8080809f;
-  text-align: center;
 
-  &:hover {
-    background: bisque;
-    cursor: pointer;
-  }
-`;
-
-const Card__name = styled.div`
-  padding: 2px 0;
-  overflow-wrap: anywhere;
-`;
-
-const Avatar = styled.img`
-  width: 100px;
-  height: 100px;
-`;
-
-export { Header, Button, HotSearchInput, Panel, Card, Card__name, Avatar }
+export { Button, HotSearchInput, Avatar, Panel }
