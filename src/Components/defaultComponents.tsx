@@ -63,6 +63,11 @@ const Panel = styled.div`
   @media screen and (min-width: 1920px){
     grid-template-columns: repeat(10, 1fr);
   }
+
+  & > a > *:hover {
+    background: bisque;
+    cursor: pointer;
+  }
 `;
 
 
