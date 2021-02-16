@@ -2,14 +2,12 @@ import styled from 'styled-components';
 
 const HotSearchInput = styled.input<any>`
   padding: 6px 20%;
-
   background: white;
   border: 2px solid transparent;
   border-radius: 6px;
-  box-shadow: 0px 0px 2px 1px #8080809f;
-
+  box-shadow: 0px 0px 2px 1px #afafaf;
   text-align: center;
-  
+
   &:hover, &:focus {
     outline: none;
     border-color: bisque;
@@ -19,7 +17,6 @@ const HotSearchInput = styled.input<any>`
 const Button = styled.button<any>`
   padding: 6px 20px;
   margin: 6px;
-  // margin-bottom: 20px;
 
   background: white;
   border: none;
@@ -70,5 +67,6 @@ const Panel = styled.div`
   }
 `;
 
-
-export { Button, HotSearchInput, Avatar, Panel }
+export {
+  Button, HotSearchInput, Avatar, Panel,
+};

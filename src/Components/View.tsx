@@ -7,30 +7,36 @@ import { Button, Avatar } from './defaultComponents';
 const ColumnDiv = styled.div<any>`
   display: flex;
   text-align: left;
-  // grid-template-columns: repeat(3, auto);
 `;
 
-function View(props : any) {  
+function View({ info, addToFavorites } : any) {
   return (
     <>
       <ColumnDiv>
-        <Card name={props.info.name}>
-          <Avatar src={props.info.owner.avatar_url} alt={props.info.name + "_logo"}/>
+        <Card name={info.name}>
+          <Avatar src={info.owner.avatar_url} alt={`${info.name}_logo`} />
         </Card>
         <Card>
-          homepage : {props.info.homepage}
-          <br/>
-          forks : {props.info.forks}
-          <br/>
-          size : {props.info.size}
-          <br/>
-          created: {new Date(Date.parse(props.info.created_at)).toLocaleDateString('ru-RU')}
+          homepage :
+          {' '}
+          {info.homepage}
+          <br />
+          forks :
+          {' '}
+          {info.forks}
+          <br />
+          size :
+          {' '}
+          {info.size}
+          <br />
+          created:
+          {' '}
+          {new Date(Date.parse(info.created_at)).toLocaleDateString('ru-RU')}
         </Card>
       </ColumnDiv>
-      <Button onClick={props.addToFavorites}>Add to Bookmark</Button>
-      <Button onClick={props.rmFromFavorites}>Remove from Bookmark</Button>
+      <Button onClick={addToFavorites}>Add to Bookmark</Button>
     </>
-    
+
   );
 }
 
