@@ -11,46 +11,37 @@ import Search from './Components/Search';
 import Favorites from './Components/Favorites';
 import View from './Components/View';
 
-function App() {
+function App() : JSX.Element {
   const [query, setQuery] = useState<string>('');
-  const [results, setResults] = useState<Object[]>([]);
+  const [results, setResults] = useState<[]>([]);
   const [page, setPage] = useState<number>(1);
-  const [viewRepo, setViewRepo] = useState<Object>({});
-
-  const newQuery = (event : any) => {
+  
+  const newSearch = (event : React.FormEvent<HTMLInputElement>) => {
     setPage(1);
-    setQuery(event.target.value);
+    setQuery(event.currentTarget.value);
   };
 
   const getMore = () => {
     setPage(page + 1);
   };
 
-  const fetchToGitHub = (q : string, perPage : number) => {
-    // eslint-disable-next-line no-unused-expressions
-    q && q.length > 2 && fetch(`https://api.github.com/search/repositories?q=${q}&per_page=20&page=${perPage}`)
-      .then((response) => response.json())
-      .then((obj) => obj.items)
-      .then((res) => {
-        // eslint-disable-next-line no-unused-expressions
-        perPage > 1
-          ? setResults((prevResults : any) => prevResults.concat(res))
-          : setResults(res);
-      });
-  };
-
-  const viewInfo = (info : Object) => {
-    setViewRepo(info);
-  };
-
-  const addToFavorites = () => {
-    const parsedLocalStarage : Object[] = JSON.parse(localStorage.getItem('favorites') || '[]');
-    parsedLocalStarage.push(viewRepo);
-    localStorage.setItem('favorites', JSON.stringify(parsedLocalStarage) || '[]');
+  const addToFavorites = ({id, name, owner}:{id:string, name:string, owner:any}) => {
+    const parsedLocalStarage : any[] = JSON.parse(localStorage.getItem('favorites') || '[]');
+    parsedLocalStarage.push({id, name, owner});
+    localStorage.setItem('favorites', JSON.stringify(parsedLocalStarage).replace(/\\/g, '') || '[]');
   };
 
   useEffect(() => {
-    fetchToGitHub(query, page);
+    // eslint-disable-next-line no-unused-expressions
+    query && query.length > 2 && fetch(`https://api.github.com/search/repositories?q=${query}&per_page=20&page=${page}`)
+    .then((response) => response.json())
+    .then((obj) => obj.items)
+    .then((res) => {
+      // eslint-disable-next-line no-unused-expressions
+      page > 1
+        ? setResults((prevResults : any) => prevResults.concat(res))
+        : setResults(res);
+    });
   }, [query, page]);
 
   return (
@@ -61,21 +52,19 @@ function App() {
       <Switch>
         <Route path="/search">
           <Search
-            newQuery={newQuery}
+            newSearch={newSearch}
             query={query}
             getMore={getMore}
             results={results}
-            viewInfo={viewInfo}
           />
         </Route>
 
-        <Route path={viewRepo ? '/view' : '/search'}>
-          <View info={viewRepo} addToFavorites={addToFavorites} />
-        </Route>
+        <Route 
+          path={'/view/:id'}
+          component={({...routeProps}) => View(addToFavorites, routeProps.match.params.id)}
+        />
 
-        <Route path="/favorites">
-          <Favorites viewInfo={viewInfo} />
-        </Route>
+        <Route path="/favorites" component={Favorites} />
       </Switch>
     </Router>
   );

@@ -1,40 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Card from './Card';
 import { Button, Avatar } from './defaultComponents';
+import defaultAvatar from '../defaultAvatar.png';
 
-const ColumnDiv = styled.div<any>`
+const ColumnDiv = styled.div`
   display: flex;
   text-align: left;
 `;
 
-function View({ info, addToFavorites } : any) {
+function View(addToFavorites: any, id : string) : JSX.Element{
+  const [viewedRepository, setViewedRepository] = useState<any>({owner: {avatar_url: defaultAvatar}});
+
+  useEffect(() => {
+    fetch(`https://api.github.com/repositories/${id}`)
+      .then(res => res.json())
+      .then(viewedData => setViewedRepository(viewedData))
+  }, [id]);
+
   return (
     <>
       <ColumnDiv>
-        <Card name={info.name}>
-          <Avatar src={info.owner.avatar_url} alt={`${info.name}_logo`} />
+        <Card name={viewedRepository.name}>
+          <Avatar src={viewedRepository.owner.avatar_url} alt={`${viewedRepository.name}_logo`} />
         </Card>
+
         <Card>
-          homepage :
-          {' '}
-          {info.homepage}
-          <br />
-          forks :
-          {' '}
-          {info.forks}
-          <br />
-          size :
-          {' '}
-          {info.size}
-          <br />
-          created:
-          {' '}
-          {new Date(Date.parse(info.created_at)).toLocaleDateString('ru-RU')}
+          <>
+            homepage:{viewedRepository.homepage }
+            <br />
+            forks:{viewedRepository.forks}
+            <br />
+            size:{viewedRepository.size}
+            <br />
+            created:{new Date(Date.parse(viewedRepository.created_at)).toLocaleDateString('ru-RU')}
+          </>
         </Card>
       </ColumnDiv>
-      <Button onClick={addToFavorites}>Add to Bookmark</Button>
+
+      <Button onClick={() => addToFavorites(viewedRepository)}>Add to Bookmark</Button>
     </>
 
   );

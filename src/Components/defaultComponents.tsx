@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const HotSearchInput = styled.input<any>`
+const HotSearchInput = styled.input`
   padding: 6px 20%;
   background: white;
   border: 2px solid transparent;
@@ -14,7 +14,7 @@ const HotSearchInput = styled.input<any>`
   }
 `;
 
-const Button = styled.button<any>`
+const Button = styled.button`
   padding: 6px 20px;
   margin: 6px;
 

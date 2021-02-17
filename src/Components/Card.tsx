@@ -14,7 +14,7 @@ const CardName = styled.div`
   overflow-wrap: anywhere;
 `;
 
-function Card({ children, name } : any) {
+function Card({ children, name } : {children: JSX.Element, name?: string} ) : JSX.Element {
   return (
     <CardDiv>
       {children}
