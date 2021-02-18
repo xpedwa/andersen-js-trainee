@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Card from "./Card";
 import { Button, Avatar } from "./defaultComponents";
-import { cardInfo } from "../tsType";
+import { ICardInfo } from "../tsType";
 import defaultAvatar from "../defaultAvatar.png";
 
 const ColumnDiv = styled.div`
@@ -16,14 +16,22 @@ function View({ id }: { id: string }): JSX.Element {
     owner: { avatar_url: defaultAvatar },
   });
 
-  const addToFavorites = ({ id, name, owner }: cardInfo) => {
-    const parsedLocalStarage: cardInfo[] = JSON.parse(
+  const addToFavorites = () => {
+    const name: string = repository.name;
+    const owner: { avatar_url: string } = repository.owner;
+
+    const parsedLocalStarage: ICardInfo[] = JSON.parse(
       localStorage.getItem("favorites") || "[]"
     );
-    parsedLocalStarage.push({ id, name, owner });
+
+    const set = new Set(parsedLocalStarage.map((item) => JSON.stringify(item)));
+    set.add(JSON.stringify({ id, name, owner }));
+    const newParsedLocalStarage = Array.from(set).map((item) =>
+      JSON.parse(item)
+    );
     localStorage.setItem(
       "favorites",
-      JSON.stringify(parsedLocalStarage).replace(/\\/g, "") || "[]"
+      JSON.stringify(newParsedLocalStarage) || "[]"
     );
   };
 
@@ -59,9 +67,7 @@ function View({ id }: { id: string }): JSX.Element {
         </Card>
       </ColumnDiv>
 
-      <Button onClick={() => addToFavorites(repository)}>
-        Add to Bookmark
-      </Button>
+      <Button onClick={addToFavorites}>Add to Bookmark</Button>
     </>
   );
 }

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button, Panel } from "./defaultComponents";
 import ListOfCards from "./ListOfCards";
-import { cardInfo } from "../tsType";
+import { ICardInfo } from "../tsType";
 
 function Favorites(): JSX.Element {
-  const [favoritesList, setFavoritesList] = useState<cardInfo[]>(
+  const [favoritesList, setFavoritesList] = useState<ICardInfo[]>(
     JSON.parse(localStorage.getItem("favorites") || "[]")
   );
 

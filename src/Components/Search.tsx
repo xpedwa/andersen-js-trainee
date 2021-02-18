@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, HotSearchInput, Panel } from "./defaultComponents";
 import ListOfCards from "./ListOfCards";
-import { cardInfo } from "../tsType";
+import { ICardInfo, stringState } from "../tsType";
 
-function Search({
-  cashedQuery,
-}: {
-  cashedQuery: [string, React.Dispatch<React.SetStateAction<string>>];
-}): JSX.Element {
+function Search({ cashedQuery }: { cashedQuery: stringState }): JSX.Element {
   const [getCashedQuery, setCashedQuery] = cashedQuery;
 
   const [query, setQuery] = useState<string>(getCashedQuery);
   const [page, setPage] = useState<number>(1);
-  const [results, setResults] = useState<cardInfo[]>([]);
+  const [results, setResults] = useState<ICardInfo[]>([]);
 
   const newSearch = (event: React.FormEvent<HTMLInputElement>) => {
     setPage(1);
@@ -33,9 +29,9 @@ function Search({
       )
         .then((response) => response.json())
         .then((obj) => obj.items)
-        .then((res: cardInfo[]) => {
+        .then((res: ICardInfo[]) => {
           page > 1
-            ? setResults((prevResults: cardInfo[]) => prevResults.concat(res))
+            ? setResults((prevResults: ICardInfo[]) => prevResults.concat(res))
             : setResults(res);
         });
   }, [query, page]);
