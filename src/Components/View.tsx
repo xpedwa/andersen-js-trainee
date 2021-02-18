@@ -24,11 +24,15 @@ function View({ id }: { id: string }): JSX.Element {
       localStorage.getItem("favorites") || "[]"
     );
 
+    // convert ICardInfo to array of strings
     const set = new Set(parsedLocalStarage.map((item) => JSON.stringify(item)));
+    // add unique string
     set.add(JSON.stringify({ id, name, owner }));
-    const newParsedLocalStarage = Array.from(set).map((item) =>
+    // convert back
+    const newParsedLocalStarage: ICardInfo[] = Array.from(set).map((item) =>
       JSON.parse(item)
     );
+
     localStorage.setItem(
       "favorites",
       JSON.stringify(newParsedLocalStarage) || "[]"
