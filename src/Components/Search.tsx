@@ -1,20 +1,34 @@
-import React from 'react';
+import React from "react";
+import { Button, HotSearchInput, Panel } from "./defaultComponents";
+import ListOfCards from "./ListOfCards";
+import { cardInfo } from "../tsType";
 
-import {
-  Button, HotSearchInput, Panel,
-} from './defaultComponents';
-import ListOfCards from './ListOfCards';
-
-function Search ({results, query, newSearch, getMore} : {results: any, query: string, newSearch: any, getMore: any}) : JSX.Element {
+function Search({
+  results,
+  query,
+  newSearch,
+  getMore,
+}: {
+  results: cardInfo[];
+  query: string;
+  newSearch: (event: React.FormEvent<HTMLInputElement>) => void;
+  getMore: () => void;
+}): JSX.Element {
   return (
     <div>
-      <HotSearchInput onChange={newSearch} value={query} placeholder="Search by GitHub repository" />
+      <HotSearchInput
+        onChange={newSearch}
+        value={query}
+        placeholder="Search by GitHub repository"
+      />
 
       <Panel>
         <ListOfCards list={results} />
       </Panel>
 
-      <Button onClick={getMore} hidden={results.length === 0}>Load More</Button>
+      <Button onClick={getMore} hidden={results.length === 0}>
+        Load More
+      </Button>
     </div>
   );
 }

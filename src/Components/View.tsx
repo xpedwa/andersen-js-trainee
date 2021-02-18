@@ -1,47 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-
-import Card from './Card';
-import { Button, Avatar } from './defaultComponents';
-import defaultAvatar from '../defaultAvatar.png';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import Card from "./Card";
+import { Button, Avatar } from "./defaultComponents";
+import { cardInfo } from "../tsType";
+import defaultAvatar from "../defaultAvatar.png";
 
 const ColumnDiv = styled.div`
   display: flex;
   text-align: left;
 `;
 
-function View(addToFavorites: any, id : string) : JSX.Element{
-  const [viewedRepository, setViewedRepository] = useState<any>({owner: {avatar_url: defaultAvatar}});
+function View({ id }: { id: string }): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [repository, setRepository] = useState<any>({
+    owner: { avatar_url: defaultAvatar },
+  });
+
+  const addToFavorites = ({ id, name, owner }: cardInfo) => {
+    const parsedLocalStarage: cardInfo[] = JSON.parse(
+      localStorage.getItem("favorites") || "[]"
+    );
+    parsedLocalStarage.push({ id, name, owner });
+    localStorage.setItem(
+      "favorites",
+      JSON.stringify(parsedLocalStarage).replace(/\\/g, "") || "[]"
+    );
+  };
 
   useEffect(() => {
     fetch(`https://api.github.com/repositories/${id}`)
-      .then(res => res.json())
-      .then(viewedData => setViewedRepository(viewedData))
+      .then((response) => response.json())
+      .then((repositoryInfo) => setRepository(repositoryInfo));
   }, [id]);
 
   return (
     <>
       <ColumnDiv>
-        <Card name={viewedRepository.name}>
-          <Avatar src={viewedRepository.owner.avatar_url} alt={`${viewedRepository.name}_logo`} />
+        <Card name={repository.name}>
+          <Avatar
+            src={repository.owner.avatar_url}
+            alt={`${repository.name}_logo`}
+          />
         </Card>
 
         <Card>
           <>
-            homepage:{viewedRepository.homepage }
+            homepage:{repository.homepage}
             <br />
-            forks:{viewedRepository.forks}
+            forks:{repository.forks}
             <br />
-            size:{viewedRepository.size}
+            size:{repository.size}
             <br />
-            created:{new Date(Date.parse(viewedRepository.created_at)).toLocaleDateString('ru-RU')}
+            created:
+            {new Date(Date.parse(repository.created_at)).toLocaleDateString(
+              "ru-RU"
+            )}
           </>
         </Card>
       </ColumnDiv>
 
-      <Button onClick={() => addToFavorites(viewedRepository)}>Add to Bookmark</Button>
+      <Button onClick={() => addToFavorites(repository)}>
+        Add to Bookmark
+      </Button>
     </>
-
   );
 }
 
