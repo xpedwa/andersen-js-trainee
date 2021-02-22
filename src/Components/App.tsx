@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Button } from "./Components/defaultComponents";
-import Search from "./Components/Search";
-import Favorites from "./Components/Favorites";
-import View from "./Components/View";
+import { Button } from "./UIComponents";
+import Search from "./Search";
+import Favorites from "./Favorites";
+import View from "./View";
 
 function App(): JSX.Element {
   const cashedQuery = useState<string>("");

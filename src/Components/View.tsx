@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Card from "./Card";
-import { Button, Avatar } from "./defaultComponents";
+import { Button, Avatar } from "./UIComponents";
 import { ICardInfo } from "../tsType";
 import defaultAvatar from "../defaultAvatar.png";
 

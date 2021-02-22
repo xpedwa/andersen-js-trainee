@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Avatar } from "./defaultComponents";
+import { Avatar } from "./UIComponents";
 import Card from "./Card";
 import { ICardInfo } from "../tsType";
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Panel } from "./defaultComponents";
+import { Button, Panel } from "./UIComponents";
 import ListOfCards from "./ListOfCards";
 import { ICardInfo } from "../tsType";
 

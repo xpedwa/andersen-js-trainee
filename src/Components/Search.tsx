@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, HotSearchInput, Panel } from "./defaultComponents";
+import { Button, HotSearchInput, Panel } from "./UIComponents";
 import ListOfCards from "./ListOfCards";
 import { ICardInfo, stringState } from "../tsType";
 
@@ -16,7 +16,7 @@ function Search({ cashedQuery }: { cashedQuery: stringState }): JSX.Element {
   };
 
   const getMore = () => {
-    setPage(page + 1);
+    setPage((page) => page + 1);
   };
 
   useEffect(() => {
