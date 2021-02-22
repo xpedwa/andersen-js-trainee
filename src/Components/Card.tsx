@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const CardDiv = styled.div`
   padding: 10px;
@@ -14,11 +14,17 @@ const CardName = styled.div`
   overflow-wrap: anywhere;
 `;
 
-function Card({ children, name } : any) {
+function Card({
+  children,
+  name,
+}: {
+  children: JSX.Element;
+  name?: string;
+}): JSX.Element {
   return (
     <CardDiv>
       {children}
-      <CardName>{ name }</CardName>
+      <CardName>{name}</CardName>
     </CardDiv>
   );
 }

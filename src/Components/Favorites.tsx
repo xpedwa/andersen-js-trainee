@@ -1,16 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { Button, Panel } from "./UIComponents";
+import ListOfCards from "./ListOfCards";
+import { ICardInfo } from "../tsType";
 
-import { Panel } from './defaultComponents';
-import ListOfCards from './ListOfCards';
-
-function Favorites({ viewInfo } : any) {
-  const favorites : Object[] = JSON.parse(localStorage.getItem('favorites') || '[]');
-
-  return (
-    <Panel>
-      <ListOfCards list={favorites} viewInfo={viewInfo} />
-    </Panel>
+function Favorites(): JSX.Element {
+  const [favoritesList, setFavoritesList] = useState<ICardInfo[]>(
+    JSON.parse(localStorage.getItem("favorites") || "[]")
   );
+
+  const clearAllFromFavorites = () => {
+    setFavoritesList([]);
+  };
+
+  useEffect(
+    () => localStorage.setItem("favorites", JSON.stringify(favoritesList)),
+    [favoritesList]
+  );
+
+  if (!favoritesList[0]) {
+    return <div>Empty</div>;
+  } else {
+    return (
+      <>
+        <Panel>
+          <ListOfCards list={favoritesList} />
+        </Panel>
+        <Button onClick={clearAllFromFavorites}>
+          Clear all from Favorites
+        </Button>
+      </>
+    );
+  }
 }
 
 export default Favorites;
