@@ -1,26 +1,49 @@
-import { ICardInfo } from "../tsType";
+import { ICardInfo, ISearchState } from "../tsType";
 
-export const SET_QUERY = "SET_QUERY";
-export const SET_PAGE = "SET_PAGE";
-export const SET_RESULT = "SET_RESULT";
+export const GET_LISTOFCARDS = "GET_LISTOFCARDS";
 
-export function setQuery(query: string) {
-  return {
-    type: SET_QUERY,
-    payload: query,
-  };
-}
+export const FETCH_LISTOFCARDS = "FETCH_LISTOFCARDS";
+export const FETCH_LISTOFCARDS_SUCCESS = "FETCH_LISTOFCARDS_SUCCESS";
+export const FETCH_LISTOFCARDS_ERROR = "FETCH_LISTOFCARDS_ERROR";
 
-export function setPage(page: number) {
-  return {
-    type: SET_PAGE,
-    payload: page,
-  };
-}
+export function getListOfCards(
+  state: ISearchState
+): (state: ISearchState) => void {
+  const { query, page, listOfCards } = state;
+  const url = `https://api.github.com/search/repositories?q=${query}&per_page=20&page=${page}`;
 
-export function setResults(cardsList: ICardInfo[]) {
-  return {
-    type: SET_RESULT,
-    payload: cardsList,
+  return (dispatch: any) => {
+    dispatch({
+      type: GET_LISTOFCARDS,
+      payload: state,
+    });
+
+    fetch(url)
+      .then((res: any) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw res.json();
+        }
+      })
+      .then((data: any) => {
+        let dataList: ICardInfo[] = [];
+        if (page > 1) {
+          dataList = listOfCards;
+        }
+
+        dispatch({
+          type: FETCH_LISTOFCARDS_SUCCESS,
+          payload: { ...state, listOfCards: dataList.concat(data.items) },
+        });
+      })
+      .catch((error) => {
+        error.then((data: any) => {
+          dispatch({
+            type: FETCH_LISTOFCARDS_ERROR,
+            payload: data.message,
+          });
+        });
+      });
   };
 }
