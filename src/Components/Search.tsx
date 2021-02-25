@@ -11,15 +11,15 @@ function Search({
   searchState: ISearchState;
   getListOfCards: any;
 }): JSX.Element {
-  const { query, page, listOfCards } = searchState;
+  const { query, page, listOfCards, loading } = searchState;
 
   const goSearch = (event: React.FormEvent<HTMLInputElement>) => {
     const newQuery = event.currentTarget.value;
-    getListOfCards({ ...searchState, query: newQuery, page: 1 });
+    getListOfCards({ ...searchState, query: newQuery, page: 1, loading: true });
   };
 
   const getMore = () => {
-    getListOfCards({ ...searchState, page: page + 1 });
+    getListOfCards({ ...searchState, page: page + 1, loading: true });
   };
 
   return (
@@ -31,7 +31,7 @@ function Search({
       />
 
       <Panel>
-        <ListOfCards list={listOfCards} />
+        <ListOfCards list={listOfCards} loading={loading} />
       </Panel>
 
       <Button onClick={getMore} hidden={listOfCards.length === 0}>

@@ -23,7 +23,7 @@ function Favorites(): JSX.Element {
     return (
       <>
         <Panel>
-          <ListOfCards list={favoritesList} />
+          <ListOfCards list={favoritesList} loading={false} />
         </Panel>
         <Button onClick={clearAllFromFavorites}>
           Clear all from Favorites

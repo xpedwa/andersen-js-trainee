@@ -8,4 +8,5 @@ export interface ISearchState {
   query: string;
   page: number;
   listOfCards: ICardInfo[];
+  loading: boolean;
 }

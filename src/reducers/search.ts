@@ -9,6 +9,7 @@ const initialState: ISearchState = {
   query: "",
   page: 1,
   listOfCards: [],
+  loading: false,
 };
 
 export function searchReducer(

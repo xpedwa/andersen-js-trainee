@@ -18,32 +18,44 @@ export function getListOfCards(
       payload: state,
     });
 
-    fetch(url)
-      .then((res: any) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw res.json();
-        }
-      })
-      .then((data: any) => {
-        let dataList: ICardInfo[] = [];
-        if (page > 1) {
-          dataList = listOfCards;
-        }
+    if (query.length === 0) {
+      dispatch({
+        type: GET_LISTOFCARDS,
+        payload: { ...state, loading: false, listOfCards: [] },
+      });
+    }
 
-        dispatch({
-          type: FETCH_LISTOFCARDS_SUCCESS,
-          payload: { ...state, listOfCards: dataList.concat(data.items) },
-        });
-      })
-      .catch((error) => {
-        error.then((data: any) => {
+    query.length > 0 &&
+      fetch(url)
+        .then((res: any) => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            throw res.json();
+          }
+        })
+        .then((data: any) => {
+          let dataList: ICardInfo[] = [];
+          if (page > 1) {
+            dataList = listOfCards;
+          }
+
           dispatch({
-            type: FETCH_LISTOFCARDS_ERROR,
-            payload: data.message,
+            type: FETCH_LISTOFCARDS_SUCCESS,
+            payload: {
+              ...state,
+              loading: false,
+              listOfCards: dataList.concat(data.items),
+            },
+          });
+        })
+        .catch((error) => {
+          error.then((data: any) => {
+            dispatch({
+              type: FETCH_LISTOFCARDS_ERROR,
+              payload: data.message,
+            });
           });
         });
-      });
   };
 }

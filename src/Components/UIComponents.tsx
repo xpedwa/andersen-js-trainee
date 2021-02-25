@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const HotSearchInput = styled.input`
+export const HotSearchInput = styled.input`
   padding: 6px 20%;
   background: white;
   border: 2px solid transparent;
@@ -15,7 +15,7 @@ const HotSearchInput = styled.input`
   }
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   padding: 6px 20px;
   margin: 6px;
 
@@ -33,12 +33,12 @@ const Button = styled.button`
   }
 `;
 
-const Avatar = styled.img`
+export const Avatar = styled.img`
   width: 100px;
   height: 100px;
 `;
 
-const Panel = styled.div`
+export const Panel = styled.div`
   display: grid;
   text-align: center;
 
@@ -68,4 +68,11 @@ const Panel = styled.div`
   }
 `;
 
-export { Button, HotSearchInput, Avatar, Panel };
+export const Loader = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: bisque;
+`;
