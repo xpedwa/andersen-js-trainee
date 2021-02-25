@@ -1,32 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { getListOfCards } from "../actions/searchActions";
 
 import { Button } from "./UIComponents";
-import { ISearchState } from "../tsType";
-
 import Search from "./Search";
 import Favorites from "./Favorites";
 import View from "./View";
 
-const mapStateToProps = (store: { search: ISearchState }) => {
-  return {
-    searchState: store.search,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    getListOfCards: (
-      searchState: ISearchState
-    ): ((searchState: ISearchState) => void) =>
-      dispatch(getListOfCards(searchState)),
-  };
-};
-
-function App(props: any): JSX.Element {
-  const { getListOfCards } = props;
+function App(props: any): React.ReactElement {
+  const { searchState, getListOfCards } = props;
 
   return (
     <Router>
@@ -39,10 +20,7 @@ function App(props: any): JSX.Element {
 
       <Switch>
         <Route path="/search">
-          <Search
-            searchState={props.searchState}
-            getListOfCards={getListOfCards}
-          />
+          <Search searchState={searchState} getListOfCards={getListOfCards} />
         </Route>
 
         <Route
@@ -58,4 +36,4 @@ function App(props: any): JSX.Element {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
