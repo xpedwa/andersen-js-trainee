@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 import { Button } from "./UIComponents";
 import Search from "./Search";
 import Favorites from "./Favorites";
 import View from "./View";
 
-function App(): JSX.Element {
-  const cashedQuery = useState<string>("");
+function App(props: any): React.ReactElement {
+  const { searchState, getListOfCards } = props;
 
   return (
     <Router>
@@ -19,7 +20,7 @@ function App(): JSX.Element {
 
       <Switch>
         <Route path="/search">
-          <Search cashedQuery={cashedQuery} />
+          <Search searchState={searchState} getListOfCards={getListOfCards} />
         </Route>
 
         <Route
